@@ -63,7 +63,7 @@ class Tank(AttackUnit):
 
         # 현재 시즈 모드일 때 시즈 모드 해제
         else:
-            print('{0}: 시즈 모드를 해제합니다..'.format(self.name))
+            print('{0}: 시즈 모드를 해제합니다.'.format(self.name))
             self.damage/=2
             self.seize_mode=False
 
@@ -147,7 +147,7 @@ Tank.seize_developed=True
 print('[알림] 탱크 시즈 모드 개발이 완료되었습니다.')
 
 # 공격 모드 준비 (마린: 스팀팩, 탱크: 시즈 모드, 레이스: 클로킹 모드)
-for unit in attack_units:
+for unit in attack_units: #isinstance: 특정 클래스에 속하는지 구분한다.
     if isinstance(unit, Marine):
         unit.stimpack()
     elif isinstance(unit, Tank):
