@@ -1,0 +1,3 @@
+import practice_quiz10_module
+
+practice_quiz10_module.sign()
