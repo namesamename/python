@@ -1,5 +1,4 @@
-from turtle import back
-from numpy import char
+import random
 import pygame
 ##########################################################################
 #기본 초기화 (반드시 해야 하는 것들)
@@ -20,10 +19,10 @@ clock=pygame.time.Clock()
 #1. 사용자 게임 초기화 (배경 화면, 게임 이미지, 좌표, 속도, 폰트 등)
 
 # 배경 만들기
-background=pygame.image.load('D:\\이지은\\09_Python\\pygame\\img\\background.png')
+background=pygame.image.load('C:\\frontend\\09_Python\\pygame\\img\\background.png')
 
 # 캐릭터 만들기
-character=pygame.image.load('D:\\이지은\\09_Python\\pygame\\img\\character.png')
+character=pygame.image.load('C:\\frontend\\09_Python\\pygame\\img\\character.png')
 character_size=character.get_rect().size
 character_width=character_size[0]
 character_height=character_size[1]
@@ -33,6 +32,15 @@ character_y_pos=screen_height-character_height
 # 이동 위치
 to_x=0
 character_speed=10
+
+# 물체 만들기
+ddong=pygame.image.load('C:\\frontend\\09_Python\\pygame\\img\\enemy.png')
+ddong_size=ddong.get_rect().size
+ddong_width=ddong_size[0]
+ddong_height=ddong_size[1]
+ddong_x_pos=random.randint(0, screen_width-ddong_width)
+ddong_y_pos=0
+ddong_speed=10
 
 running=True #게임이 진행 중인가?
 while running:
@@ -61,11 +69,29 @@ while running:
     elif character_x_pos>screen_width-character_width:
         character_x_pos=screen_width-character_width
 
+    ddong_y_pos+=ddong_speed
+
+    if ddong_y_pos>screen_height:
+        ddong_y_pos=0
+        ddong_x_pos=random.randint(0, screen_width-ddong_width)
+
     # 4. 충돌 처리
+    character_rect=character.get_rect()
+    character_rect.left=character_x_pos
+    character_rect.top=character_y_pos
+
+    ddong_rect=ddong.get_rect()
+    ddong_rect.left=ddong_x_pos
+    ddong_rect.top=ddong_y_pos
+
+    if character_rect.colliderect(ddong_rect):
+        print('충돌했어요')
+        running=False
 
     # 5. 화면에 그리기
     screen.blit(background, (0,0))
     screen.blit(character, (character_x_pos, character_y_pos))
+    screen.blit(ddong, (ddong_x_pos, ddong_y_pos))
 
     pygame.display.update()
 
